@@ -22,6 +22,7 @@ The EDA phase focused on understanding the data structure, identifying class imb
 <p align="center">
   <img src="assests/eda_duplicate_distribution.png" alt="Target Variable Distribution" width="500"/>
 </p>
+
 ### 2. Length Feature Analysis (Word Count Difference)
 
 
@@ -32,6 +33,7 @@ The EDA phase focused on understanding the data structure, identifying class imb
 <p align="center">
   <img src="assests/eda_word_count_diff_distribution.png" alt="Word Count Difference Distribution" width="500"/>
 </p>
+
 ### 3. Feature Correlation
 
 
