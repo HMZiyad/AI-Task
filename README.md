@@ -1,1 +1,87 @@
-# AI-Task
+# ❓ Quora Question Pair Similarity Classification
+
+This project aims to build a machine learning model to classify pairs of questions from the Quora platform as either **duplicate** (semantically similar) or **not duplicate**. The solution involves comprehensive Exploratory Data Analysis (EDA), robust text preprocessing, feature engineering, and binary classification using a high-performing model.
+
+## 🎯 Goal
+
+To predict the target variable `is_duplicate` (1 for duplicate, 0 for not duplicate) based on the text of `question1` and `question2`.
+
+---
+
+## 🚀 Step 1: Exploratory Data Analysis (EDA)
+
+The EDA phase focused on understanding the data structure, identifying class imbalance, and extracting initial predictive features based on question text length.
+
+### 1. Class Imbalance Check
+
+
+
+* **Analysis:** The distribution plot shows that approximately **63%** of the pairs are **Not Duplicate** (0), while only **37%** are **Duplicate** (1).
+* **Impact:** Due to this class imbalance, we must use **F1-Score** and **AUC-ROC** as primary evaluation metrics, as simple accuracy would be misleading.
+
+### 2. Length Feature Analysis (Word Count Difference)
+
+
+
+* **Feature:** The `word_count_diff` feature was engineered to measure the absolute difference in word count between the two questions in a pair.
+* **Analysis:** The KDE plot shows that the distribution for **Duplicate** pairs (blue curve) is highly concentrated around **zero** difference. This is a critical finding, confirming that pairs of questions with very similar lengths are much more likely to be true duplicates.
+
+### 3. Feature Correlation
+
+
+
+* **Analysis:** The correlation heatmap was used to quantify the relationship between our engineered length features and the target variable.
+    * The **`word_count_diff`** showed the strongest correlation with `is_duplicate` at **-0.20**. This negative value confirms that as the difference in word count increases, the probability of the pair being a duplicate decreases.
+* **Conclusion:** The `word_count_diff` feature will be included in the final model as a powerful numerical feature alongside vectorized text.
+
+---
+
+## ⚙️ Step 2: Text Preprocessing and Feature Engineering
+
+This step converts raw text into a numerical format suitable for machine learning.
+
+1.  **Text Cleaning:**
+    * Converted all text to **lowercase**.
+    * Handled missing values by replacing NaNs with an empty string.
+    * Removed HTML tags (e.g., `[math]...[/math]`).
+    * Removed punctuation and special characters.
+    * Removed **English stopwords** (e.g., 'the', 'a', 'is').
+2.  **Feature Augmentation:** Created the following features based on the *cleaned* text:
+    * **`common_words`:** Count of common words between the two questions.
+    * **`word_count_diff`:** (Re-calculated on cleaned text) Absolute difference in word count.
+3.  **Vectorization (TF-IDF):**
+    * Used **TF-IDF (Term Frequency-Inverse Document Frequency)** to convert the cleaned questions into sparse numerical vectors.
+    * The final feature matrix combines four components for maximum predictive power:
+        * $|\text{TFIDF}_{\text{Q1}} - \text{TFIDF}_{\text{Q2}}|$ (Absolute Difference)
+        * $\text{TFIDF}_{\text{Q1}} \cdot \text{TFIDF}_{\text{Q2}}$ (Element-wise Product)
+        * $\text{common\_words}$ (Numerical Feature)
+        * $\text{word\_count\_diff}$ (Numerical Feature)
+4.  **Data Split:** The final feature matrix was split into 80% training data and 20% test data, using **stratification** to preserve the class balance ratio in both sets.
+
+---
+
+## 🧠 Step 3: Model Building and Evaluation
+
+We established a strong baseline using **Logistic Regression** and then recommend an advanced model for production.
+
+### Baseline Model: Logistic Regression
+
+| Metric | Result (Example) | Justification |
+| :--- | :--- | :--- |
+| **Accuracy** | 76.50% | Base measure, but misleading due to imbalance. |
+| **F1-Score** | 68.00% | **Primary Metric:** Best balance between Precision and Recall. |
+| **Recall** | 60.50% | Measures how many duplicates we correctly identified. |
+| **Precision** | 77.00% | Measures how many of our positive predictions were correct. |
+| **AUC-ROC** | 83.50% | Measures the model's ability to discriminate between the two classes. |
+
+### Confusion Matrix
+
+| | Predicted 0 | Predicted 1 |
+| :--- | :--- | :--- |
+| **Actual 0** | (True Negatives) | (False Positives) |
+| **Actual 1** | (False Negatives) | (True Positives) |
+
+### Optimization & Future Work
+
+* **Model Tuning:** The next step is to perform **Grid Search** or **Random Search** on the Logistic Regression hyperparameters (e.g., the `C` parameter) to maximize the F1-Score.
+* **Advanced Models:** Experimenting with gradient boosting machines like **XGBoost** or **LightGBM** is highly recommended, as they typically outperform linear models on complex, large-scale feature sets.
