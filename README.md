@@ -179,8 +179,8 @@ The final integer sequence is fed into the network's first layer—the **Embeddi
 [Image of a word embedding vector]
 
 * **Embedding Function:** This layer acts as a lookup table, converting the simple integer index (e.g., `12`) into a rich, **dense vector** (e.g., $100$ dimensions). This is where the model learns the complex **semantic meaning** of each word, making it possible for the LSTM/GRU to understand context and relationships far beyond what a simple TF-IDF score can achieve.
-
-##  Step 4: Model Evaluation and Comparison(Hyper Parameter Tunned)
+---
+##  Step 3: Model Evaluation and Comparison(Hyper Parameter Tunned)
 
 The final models were evaluated on the unbiased **Test Set** (20% of the data) using metrics critical for imbalanced classification: **F1-Score** and **AUC-ROC**.
 
@@ -217,7 +217,7 @@ Given the class imbalance ($\mathbf{63\%}$ Non-Duplicates), we prioritize the fo
 * **AUC-ROC:** This measures the model's ability to discriminate between the two classes across all possible probability thresholds. An AUC-ROC score of $\mathbf{0.8834}$ (for Logistic Regression) indicates the model has excellent discrimination capability.
 
 ---
-## 📈 Visual Model Evaluation on Test Set
+##  Visual Model Evaluation on Test Set
 
 The following analysis is based on the evaluation of the four models tested on the unbiased $\mathbf{20\%}$ Test Set. We prioritize **F1-Score** and **AUC-ROC** due to the class imbalance.
 
@@ -285,3 +285,27 @@ This model used a single GRU layer for sequence processing.
 #### Analysis:
 * **CM:** This matrix recorded the highest number of overall misclassifications among the neural networks.
 * **ROC Curve:** The **AUC-ROC of $\mathbf{0.8529}$** is the lowest recorded, indicating that the single GRU layer was the least effective architecture for solving this particular similarity task.
+---
+## 4. Conclusion and Project Summary
+
+The Quora Question Pair Similarity Classification project was successfully executed, moving from rigorous data exploration to the implementation and evaluation of advanced models.
+
+### 4.1 Final Model Performance and Justification
+
+The project's key finding was that the simpler **Logistic Regression** model, trained on the strong $\mathbf{40,002-dimensional}$ TF-IDF feature set, achieved the highest overall performance on the unbiased Test Set.
+
+| Metric | Logistic Regression (Best) | ANN + LSTM + GRU (Best NN) |
+| :--- | :--- | :--- |
+| **F1-Score** | $\mathbf{0.7509}$ | $\mathbf{0.7448}$ |
+| **AUC-ROC** | $\mathbf{0.8834}$ | $\mathbf{0.8765}$ |
+
+* **Optimal Choice:** The Logistic Regression model achieved the best $\mathbf{F1-Score}$ and **AUC-ROC** due to its ability to effectively utilize the highly sparse, linearly separable features created through the **TF-IDF Feature Stacking** technique.
+* **ANN Validation:** The **Stacked Siamese LSTM + GRU Network** proved highly competitive, achieving performance nearly identical to the baseline. This validates the success of using Recurrent Networks for complex sequence similarity problems.
+
+### 4.2 Strategic Project Successes
+
+1.  **Imbalance Handling:** The use of **stratified splitting** and **Random OverSampling (ROS)** successfully mitigated the $\mathbf{63/37}$ class imbalance, ensuring the final metrics were reliable measures of the model's performance on the minority class (Duplicates).
+2.  **Feature Engineering:** The EDA-driven featuresproved consistently powerful across all models, confirming the critical importance of initial feature engineering.
+3.  **Architectural Validation:** The stacking of **LSTM and GRU** layers was validated as a successful technique for enhancing sequence context capture, improving performance over single-layer RNNs.
+
+In conclusion, the project delivered a robust classification solution, providing both an efficient linear model for immediate application and a fully validated, high-performing deep learning architecture for future exploration.
