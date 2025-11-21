@@ -238,15 +238,25 @@ The following analysis is based on the evaluation of the four models tested on t
 
 This advanced architecture, stacking both recurrent layers, was the best-performing neural network.
 
-**Numerical Results:** F1-Score: **0.7330**, AUC-ROC: **0.8633**
+**Numerical Results:** F1-Score: **0.7448**, AUC-ROC: **0.8765**
 
 | Confusion Matrix (CM) | ROC Curve |
 | :---: | :---: |
 | ![Confusion Matrix for Stacked LSTM-GRU Network](assests/evaluation_confusion_matrix_stacked.png) | ![ROC Curve for Stacked LSTM-GRU Network](assests/evaluation_roc_curve_stacked.png) |
 
-#### Analysis:
-* **CM:** This model recorded the highest **Recall ($\mathbf{0.8048}$)** among all ANN models. The high count of **True Positives** shows that stacking the recurrent layers successfully captured complex semantic patterns.
-* **ROC Curve:** With an **AUC-ROC of $\mathbf{0.8633}$**, the curve sits visually higher than the single-layer LSTM and GRU curves, confirming the architectural benefit of stacking layers.
+### Analysis: Stacked LSTM + GRU (Optimized Performance)
+
+| Metric | Value |
+| :--- | :--- |
+| **F1-Score** | **0.7448** |
+| **AUC-ROC** | **0.8765** |
+| Accuracy | 0.8042 |
+| Precision | 0.7177 |
+| Recall | 0.7740 |
+
+* **Overall Performance:** This optimized Stacked LSTM + GRU model is now the best-performing sequential network and achieves performance metrics that are **nearly identical** to the highest-scoring Logistic Regression baseline ($\text{F1} = 0.7509$).
+* **Model Validation:** The high **AUC-ROC ($\mathbf{0.8765}$)** confirms excellent discriminatory power, validating the choice to use sequence modeling and an Embedding layer to learn semantic relationships.
+* **Balanced Score:** The **F1-Score ($\mathbf{0.7448}$)** is very strong. The model maintains a solid balance between **Precision ($\mathbf{0.7177}$)** and **Recall ($\mathbf{0.7740}$)**, indicating it is robust at finding duplicates without generating excessive false alarms. This proves that with proper tuning, advanced RNN models can achieve results comparable to traditional models on this type of task.
 
 ### 3. Model B: Siamese ANN + LSTM
 
