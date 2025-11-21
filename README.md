@@ -2,13 +2,13 @@
 
 This project aims to build a machine learning model to classify pairs of questions from the Quora platform as either **duplicate** (semantically similar) or **not duplicate**. The solution involves comprehensive Exploratory Data Analysis (EDA), robust text preprocessing, feature engineering, and binary classification using a high-performing model.
 
-## 🎯 Goal
+##  Goal
 
 To predict the target variable `is_duplicate` (1 for duplicate, 0 for not duplicate) based on the text of `question1` and `question2`.
 
 ---
 
-## 🚀 Step 1: Exploratory Data Analysis (EDA)
+##  Step 1: Exploratory Data Analysis (EDA)
 
 The EDA phase focused on understanding the data structure, identifying class imbalance, and extracting initial predictive features based on question text length.
 
@@ -100,7 +100,7 @@ This visualization, a **Heatmap**, quantifies the linear relationship between th
 
 ---
 
-## ⚙️ Step 2: Text Preprocessing and Feature Engineering
+##  Step 2: Text Preprocessing and Feature Engineering
 
 This step transformed the raw text into a high-dimensional feature matrix suitable for machine learning, while also managing class imbalance.
 
@@ -146,7 +146,7 @@ To prevent the model from being biased toward the majority class (Non-Duplicates
 
 The training data is now perfectly balanced (50/50), which is essential for achieving reliable **Precision** and **Recall** metrics.
 
-## 💡 Why Sequence Preprocessing is Essential for LSTMs/GRUs
+##  Why Sequence Preprocessing is Essential for LSTMs/GRUs
 
 Switching from the wide **TF-IDF vectors** to **Sequence Preprocessing** (Tokenization and Padding) was a necessary step because the new architecture, the **Siamese LSTM/GRU Network**, requires a fundamentally different input structure.
 
@@ -180,7 +180,7 @@ The final integer sequence is fed into the network's first layer—the **Embeddi
 
 * **Embedding Function:** This layer acts as a lookup table, converting the simple integer index (e.g., `12`) into a rich, **dense vector** (e.g., $100$ dimensions). This is where the model learns the complex **semantic meaning** of each word, making it possible for the LSTM/GRU to understand context and relationships far beyond what a simple TF-IDF score can achieve.
 
-## 🎯 Step 4: Model Evaluation and Comparison
+##  Step 4: Model Evaluation and Comparison(Hyper Parameter Tunned)
 
 The final models were evaluated on the unbiased **Test Set** (20% of the data) using metrics critical for imbalanced classification: **F1-Score** and **AUC-ROC**.
 
@@ -190,8 +190,8 @@ The table below summarizes the key metrics for the best models tested:
 
 | Model Architecture | Accuracy | Precision | Recall | **F1-Score** | **AUC-ROC** |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Logistic Regression (TF-IDF)** | **0.7983** | **0.6902** | **0.8233** | **0.7509** | **0.8834** |
-| ANN + LSTM + GRU (Stacked) | 0.7835 | 0.6729 | 0.8048 | 0.7330 | 0.8633 |
+| Logistic Regression (TF-IDF) | 0.7983 | 0.6902 | 0.8233 | 0.7509 | 0.8834 |
+| **ANN + LSTM + GRU (Stacked)** | **0.8042** | **0.7177** | **0.7740** | **0.7448** | **0.8765** |
 | ANN + LSTM | 0.7856 | 0.6871 | 0.7701 | 0.7262 | 0.8587 |
 | ANN + GRU | 0.7786 | 0.6748 | 0.7727 | 0.7205 | 0.8529 |
 
